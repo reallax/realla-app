@@ -17,6 +17,16 @@ def index(request):
     # return HttpResponse("<h1>Hello Blueking!<h1>")
     return render_mako_context(request, '/realla_app/custom.html')
 
+
+def sel_type(request):
+    sel_type_val = request.POST['sel_type']
+    print 'sel_type_val = ', sel_type_val
+    if sel_type_val and sel_type_val == 'blueking':
+        return HttpResponse('congratulation!')
+    else:
+        return HttpResponse(u'please choose "蓝鲸"')
+
+
 def dev_guide(request):
     """
     开发指引

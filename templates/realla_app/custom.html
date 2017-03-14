@@ -38,7 +38,7 @@
                     <div class="king-header-inner">
                         <div class="king-header-brand">
                             <a href="javascript:;">
-                                <img src="https://magicbox.bkclouds.cc/static_api/v3/components/horizontal_nav8/images/logo.png" height="30">
+                                <img src="https://magicbox.bkclouds.cc/static_api/v3/components/horizontal_nav8/images/logo.png" height="30"> by Realla
                             </a>
                         </div>
                         <div class="king-header-list list2">
@@ -187,18 +187,18 @@
             <!-- content start -->
             <div class="king-content-wrap">
                 <div class="king-layout1-content" style="margin-left: 216px;">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" method="POST">
                         <div class="container-fluid mb0 ">
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="form-group clearfix f18">
                                         <label class="col-sm-3 control-label bk-lh30 pt0">业务类型：</label>
                                         <div class="col-sm-9">
-                                            <select name="" id="" class="form-control bk-valign-top">
-                                                <option value="蓝鲸">蓝鲸</option>
-                                                <option value="花猫">花猫</option>
-                                                <option value="动物">动物</option>
-                                                <option value="虫">虫</option>
+                                            <select name="select_type" id="" class="form-control bk-valign-top">
+                                                <option value="blueking">蓝鲸</option>
+                                                <option value="flowercat">花猫</option>
+                                                <option value="animal">动物</option>
+                                                <option value="worms">虫</option>
                                             </select>
                                         </div>
                                     </div>
@@ -206,7 +206,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group clearfix">
                                         <div class="col-sm-9 col-sm-offset-3">
-                                            <button type="button" class="king-btn mr10  king-success">提交</button>
+                                            <button type="button" class="btn-submit king-btn mr10  king-success">提交</button>
                                             <button type="button" class="king-btn king-default ">取消</button>
                                         </div>
                                     </div>
@@ -361,6 +361,42 @@
                         $('.ranger-box2 thead').html(renderTpl(headerTpl,res.catalogues));
                     }
                 });
+
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                $(".btn-submit").click(function() {
+                    var select_val = $("select[name='select_type']").val();
+                    var csrftoken = getCookie('csrftoken');
+                    //alert(select_val + ' - ' + csrftoken)
+
+                    $.ajax({
+                        type: "POST",
+                        url: "realla/sel_type",
+                        data: {
+                            sel_type: select_val,
+                            csrfmiddlewaretoken: csrftoken
+                        },
+                        success: function(data) {
+                            alert(data);
+                        },
+                        error: function(data) {
+                            alert(data);
+                        }
+                    });
+                })
             });
     </script>
 </body>
